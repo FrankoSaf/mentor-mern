@@ -1,0 +1,40 @@
+.landing-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'title animation';
+}
+.landing_container-left {
+  grid-area: title;
+  position: relative;
+}
+.landing_container-left h1 {
+  font-size: 13rem;
+  color: var(--colorSecondary);
+}
+.landing_container-right {
+  grid-area: animation;
+}
+.landing_container-right img {
+  width: 40rem;
+  height: 40rem;
+}
+.landing-container > * {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/* .blue {
+  width: 30rem;
+  height: 30rem;
+  border-radius: 50%;
+  opacity: 0.3;
+  background-color: var(--colorSecondary);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -500;
+  overflow: hidden;
+} */

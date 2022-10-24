@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
-const Login = () => {
+import authStyles from '../../UI/Auth/Auth.module.css';
+const Login = ({ changeAuthHandler }) => {
   const { setUser } = useContext(UserContext);
   const [loginUser, setLoginUser] = useState({});
   const [errors, setErrors] = useState([]);
@@ -26,8 +27,16 @@ const Login = () => {
     }
   };
   return (
-    <main>
-      <h1>Login</h1>
+    <>
+      <h1
+        style={{
+          textAlign: 'center',
+          fontSize: '40px',
+          color: 'var(--colorSecondary)',
+        }}
+      >
+        Login
+      </h1>
       {errors && Array.isArray(errors) ? (
         <ul>
           {errors.map((error, index) => {
@@ -37,24 +46,40 @@ const Login = () => {
       ) : (
         <p>{errors}</p>
       )}
-      <form onSubmit={onSubmitHandler}>
-        <label htmlFor='email'>Email</label>
-        <input
-          type='email'
-          name='email'
-          id='email'
-          onChange={onChangeHandler}
-        />
-        <label htmlFor='password'>Password</label>
-        <input
-          type='password'
-          name='password'
-          id='password'
-          onChange={onChangeHandler}
-        />
-        <input type='submit' value='Submit' />
+      <form onSubmit={onSubmitHandler} className={authStyles.form}>
+        <div className={authStyles.inputCont}>
+          <label htmlFor='email' className={authStyles.label}>
+            Email
+          </label>
+          <input
+            type='email'
+            name='email'
+            id='email'
+            onChange={onChangeHandler}
+            className={authStyles.input}
+          />
+        </div>
+        <div className={authStyles.inputCont}>
+          <label htmlFor='password' className={authStyles.label}>
+            Password
+          </label>
+          <input
+            type='password'
+            name='password'
+            id='password'
+            onChange={onChangeHandler}
+            className={authStyles.input}
+          />
+        </div>
+        <input type='submit' value='Submit' className={authStyles.button} />
       </form>
-    </main>
+      <p>
+        Don't have an account?{' '}
+        <span onClick={changeAuthHandler} className={authStyles.span}>
+          Sign up
+        </span>
+      </p>
+    </>
   );
 };
 

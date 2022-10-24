@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-const Register = () => {
+import authStyles from '../../UI/Auth/Auth.module.css';
+const Register = ({ changeAuthHandler }) => {
   const [newUser, setNewUser] = useState({ role: 'student' });
   const [errors, setErrors] = useState([]);
   const onChangeHandler = (e) => {
@@ -22,7 +22,7 @@ const Register = () => {
   };
 
   return (
-    <main>
+    <>
       {errors && (
         <ul>
           {errors.map((error) => (
@@ -30,53 +30,76 @@ const Register = () => {
           ))}
         </ul>
       )}
-      <form onSubmit={onSubmitHandler}>
-        <div>
-          <label htmlFor='first-name'>First Name:</label>
+      <h1
+        style={{
+          textAlign: 'center',
+          fontSize: '40px',
+          color: 'var(--colorSecondary)',
+        }}
+      >
+        Register
+      </h1>
+      <form onSubmit={onSubmitHandler} className={authStyles.form}>
+        <div className={authStyles.inputCont}>
+          <label htmlFor='first-name' className={authStyles.label}>
+            First Name:
+          </label>
           <input
             type='text'
             name='firstName'
             id='first-name'
             required
             onChange={onChangeHandler}
+            className={authStyles.input}
           />
         </div>
-        <div>
-          <label htmlFor='last-name'>Last Name:</label>
+        <div className={authStyles.inputCont}>
+          <label htmlFor='last-name' className={authStyles.label}>
+            Last Name:
+          </label>
           <input
             type='text'
             name='lastName'
             id='last-name'
             required
             onChange={onChangeHandler}
+            className={authStyles.input}
           />
         </div>
-        <div>
-          <label htmlFor='password'>Password:</label>
+        <div className={authStyles.inputCont}>
+          <label htmlFor='password' className={authStyles.label}>
+            Password:
+          </label>
           <input
             type='password'
             name='password'
             id='password'
             required
             onChange={onChangeHandler}
+            className={authStyles.input}
           />
         </div>
         {/* <div>
           <label htmlFor='confirm-passwords'>Confirm Password:</label>
           <input type='password' name='confirmPassword' id='confirm-password' />
         </div> */}
-        <div>
-          <label htmlFor='email'>Email:</label>
+        <div className={authStyles.inputCont}>
+          <label htmlFor='email' className={authStyles.label}>
+            Email:
+          </label>
           <input
             type='email'
             name='email'
             id='email'
             required
             onChange={onChangeHandler}
+            className={authStyles.input}
           />
         </div>
-        <div>
-          <label htmlFor='role'>Are you student or mentor?</label>
+        <div className={authStyles.inputCont}>
+          <label htmlFor='role' className={authStyles.label}>
+            Are you student or mentor?
+          </label>
           <select
             name='role'
             id='role'
@@ -87,20 +110,28 @@ const Register = () => {
             <option value='mentor'>Mentor</option>
           </select>
         </div>
-        <div>
-          <label htmlFor='age'>Age:</label>
+        <div className={authStyles.inputCont}>
+          <label htmlFor='age' className={authStyles.label}>
+            Age:
+          </label>
           <input
             type='number'
             name='age'
             id='age'
-           
+            min='14'
             max='88'
             onChange={onChangeHandler}
           />
         </div>
-        <input type='submit' value='Submit' />
+        <input type='submit' value='Submit' className={authStyles.button} />
       </form>
-    </main>
+      <p>
+        Have an account? Then{' '}
+        <span onClick={changeAuthHandler} className={authStyles.span}>
+          login
+        </span>
+      </p>
+    </>
   );
 };
 

@@ -40,7 +40,15 @@ const registerValidation = [
     .not()
     .isEmpty()
     .isLength({ min: 6 })
+    .isStrongPassword()
     .withMessage('Password should have minimum 6 characters'),
+  check('verifyPassword').custom((val, { req }) => {
+    if (val === req.body.verifyPassword) {
+      return true;
+    } else {
+      throw new Error('Password dont match');
+    }
+  }),
   check('age')
     .optional()
     .isInt({ min: 16, max: 88 })
@@ -55,7 +63,6 @@ const registerValidation = [
     .exists({ checkFalsy: true })
     .withMessage('Role should be selected')
     .custom((val) => {
-      console.log(val);
       if (val !== 'mentor' && val !== 'student') {
         throw new Error('Please choose between student and mentor');
       }
@@ -68,3 +75,4 @@ const registerValidation = [
 ];
 
 module.exports = { registerValidation };
+
