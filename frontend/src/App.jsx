@@ -6,7 +6,7 @@ import { UserContext } from './context/UserContext';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Navigation from './components/Navigation/Navigation.jsx';
-import Footer from './components/Navigation/Footer/Footer';
+import Footer from './components/Footer/Footer';
 import Authentication from './pages/Auth/Authentication';
 function App() {
   const { user } = useContext(UserContext);

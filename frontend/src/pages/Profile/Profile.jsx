@@ -1,20 +1,13 @@
-import React, { useContext} from 'react';
+import React, { useContext } from 'react';
+import Sidebar from '../../components/Profile/Sidebar';
 import { UserContext } from '../../context/UserContext';
+import profileStyles from '../../UI/Profile.module.css';
 const Profile = () => {
   const { user } = useContext(UserContext);
   return (
-    <main>
-      {user ? (
-        <div>
-          <h1>
-            {user.firstName} {user.lastName}
-          </h1>
-          <h4>{user.age}</h4>
-        </div>
-      ) : (
-        <div>Loading</div>
-      )}
-    </main>
+    <section className={profileStyles.container}>
+      {user ? <Sidebar user={user} /> : <div>Loading</div>}
+    </section>
   );
 };
 

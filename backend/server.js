@@ -18,6 +18,10 @@ app.use(
 );
 app.use('/auth', authRoute);
 app.use('/profile', profileRoute);
+app.post('/logout', (req, res) => {
+  req.session.destroy();
+  res.send('ok');
+});
 
 mongoose.connect(process.env.DB_LINK, () => {
   app.listen(process.env.PORT, () => {

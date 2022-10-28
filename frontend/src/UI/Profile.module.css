@@ -1,0 +1,41 @@
+.container {
+  background-color: red;
+  width: 95%;
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 20rem 1fr 30rem;
+  grid-template-areas: 'chat about infos';
+}
+
+.img-container {
+  width: 100%;
+  height: 20rem;
+}
+.img-container img {
+  width: 100%;
+  height: 100%;
+}
+.sidebar {
+  grid-area: infos;
+}
+.sidebar > * {
+  margin-bottom: 2rem;
+}
+.about {
+  text-align: left;
+  max-width: 30ch;
+}
+.languages-list {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+.languages-list li {
+  color: white;
+  text-align: center;
+  display: inline-block;
+  background-color: blue;
+  border-radius: 5px;
+  min-width: 10rem;
+}
