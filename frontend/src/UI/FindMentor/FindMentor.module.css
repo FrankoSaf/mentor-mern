@@ -1,0 +1,30 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 35rem 1fr;
+  grid-template-areas: 'filter mentors';
+}
+.filter {
+  grid-area: filter;
+  background-color: yellow;
+}
+.mentors {
+  grid-area: mentors;
+  background-color: blue;
+  color: white;
+}
+.filters {
+  list-style-type: none;
+  width: 30%;
+}
+.filters li {
+  margin-top: 5px;
+}
+.checked {
+  background-color: red;
+  text-align: right;
+}
+.price {
+  display: flex;
+}

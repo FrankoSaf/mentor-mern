@@ -8,6 +8,7 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import Navigation from './components/Navigation/Navigation.jsx';
 import Footer from './components/Footer/Footer';
 import Authentication from './pages/Auth/Authentication';
+import FindMentor from './pages/FindMentor/FindMentor';
 function App() {
   const { user } = useContext(UserContext);
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path='/' element={<LandingPage />} />
           {user ? (
             <>
+              <Route path='/mentors' element={<FindMentor />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='*' element={<ErrorPage />} />
             </>

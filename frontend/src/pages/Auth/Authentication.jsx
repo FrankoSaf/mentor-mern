@@ -3,7 +3,7 @@ import Login from './Login';
 import Register from './Register';
 import authStyles from '../../UI/Auth/Auth.module.css';
 const Authentication = () => {
-  const [authSwitch, setAuthSwitch] = useState(false);
+  const [authSwitch, setAuthSwitch] = useState(true);
   const changeAuthHandler = () => setAuthSwitch((pre) => !pre);
   console.log(authSwitch);
   return (
