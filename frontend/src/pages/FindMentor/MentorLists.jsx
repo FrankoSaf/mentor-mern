@@ -1,11 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { mentors } from '../../assets/mentors';
 import cardStyles from '../../UI/FindMentor/MentorLists.module.css';
-const MentorLists = () => {
-  console.log(mentors);
+const MentorLists = ({ filterLanguages, filterLevel, min, max }) => {
+  const [mentorsList, setMentorsList] = useState(mentors);
+  const [filteredMentorList, setFilteredMentorList] = useState(mentorsList);
+  useEffect(() => {
+    if (filterLanguages.length > 0 || filterLevel.length > 0) {
+      setFilteredMentorList(
+        mentorsList
+          ?.filter((mentor) => {
+            return mentor.tech.some((item) => filterLanguages.includes(item))
+              ? filterLevel.length > 0
+                ? filterLevel.includes(mentor.level)
+                  ? true
+                  : false
+                : true
+              : filterLevel.length > 0 && filterLanguages.length === 0
+              ? filterLevel.includes(mentor.level)
+                ? true
+                : false
+              : false;
+          })
+          .filter((item) => item.price >= min && item.price <= max)
+      );
+    } else {
+      setFilteredMentorList(
+        mentorsList.filter((item) => item.price >= min && max >= item.price)
+      );
+    }
+  }, [filterLanguages, filterLevel, max, min]);
+  console.log(max, min);
   return (
     <div className={cardStyles.display}>
-      {mentors.map((mentor) => {
+      {filteredMentorList?.map((mentor) => {
         return (
           <div className={cardStyles.card}>
             <div className={cardStyles['card_image']}>

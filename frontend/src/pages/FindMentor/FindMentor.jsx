@@ -7,6 +7,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import MentorLists from './MentorLists';
 const FindMentor = () => {
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(100);
   const [orgArr, setOrgArr] = useState([
     { name: 'javascript', checked: false },
     { name: 'python', checked: false },
@@ -15,24 +17,53 @@ const FindMentor = () => {
     { name: 'java', checked: false },
   ]);
   const [experience, setExperience] = useState([
-    { lvl: 'Beginner', checked: false },
-    { lvl: 'Intermediate', checked: false },
-    { lvl: 'Advanced', checked: false },
-    { lvl: 'Expert', checked: false },
+    { name: 'Beginner', checked: false },
+    { name: 'Intermediate', checked: false },
+    { name: 'Advanced', checked: false },
+    { name: 'Expert', checked: false },
   ]);
-
-  const minPriceRef = useRef(0);
-  const maxPriceRef = useRef(999);
+  const [filterLanguages, setFilterLanguages] = useState([]);
+  const [filterLevel, setFilterLevel] = useState([]);
   const [programmingLanguages, setProgrammingLanguages] = useState(orgArr);
-  const checkTechLang = (idx, arr, setArr) => {
-    const newArr = arr.map((item, index) =>
-      index === idx ? { ...item, checked: !item.checked } : item
+  const checkTechLang = (name, arr, setArr) => {
+    const newArr = arr.map((item) =>
+      item.name === name ? { ...item, checked: !item.checked } : item
     );
     setArr(newArr);
   };
   useEffect(() => {
+    setFilterLanguages(
+      orgArr.reduce(
+        (acc, item) => (item.checked === true ? [...acc, item.name] : acc),
+        []
+      )
+    );
     setProgrammingLanguages(orgArr);
-  }, [orgArr]);
+    setFilterLevel(
+      experience.reduce(
+        (acc, item) => (item.checked === true ? [...acc, item.name] : acc),
+        []
+      )
+    );
+  }, [orgArr, experience]);
+  const onMinChange = (e) => {
+    e.target.value = Math.round(parseInt(e.target.value));
+    e.target.value = Number(e.target.value);
+    if (e.target.value > 0 && e.target.value < parseInt(max)) {
+      setMin(Number(e.target.value));
+    } else if (e.target.value <= 0) {
+      setMin(0);
+    }
+  };
+  const onMaxChange = (e) => {
+    e.target.value = Math.round(e.target.value);
+    e.target.value = Number(e.target.value);
+    if (e.target.value < 100 && e.target.value > Number(min)) {
+      setMax(Number(e.target.value));
+    } else if (e.target.value > 100) {
+      setMax(100);
+    }
+  };
   return (
     <section className={findStyles.container}>
       <div className={findStyles.filter}>
@@ -61,7 +92,9 @@ const FindMentor = () => {
                   {programmingLanguages.map((item, index) => {
                     return (
                       <li
-                        onClick={(e) => checkTechLang(index, orgArr, setOrgArr)}
+                        onClick={(e) =>
+                          checkTechLang(item.name, orgArr, setOrgArr)
+                        }
                         style={{ cursor: 'pointer' }}
                         className={
                           item.checked === true ? `${findStyles.checked}` : ''
@@ -83,14 +116,15 @@ const FindMentor = () => {
                 <ul className={findStyles.filters}>
                   {experience.map((item, index) => (
                     <li
+                      style={{ cursor: 'pointer' }}
                       className={
                         item.checked === true ? `${findStyles.checked}` : ''
                       }
                       onClick={(e) =>
-                        checkTechLang(index, experience, setExperience)
+                        checkTechLang(item.name, experience, setExperience)
                       }
                     >
-                      {item.lvl}
+                      {item.name}
                     </li>
                   ))}
                 </ul>
@@ -101,19 +135,21 @@ const FindMentor = () => {
                 Price:
               </AccordionSummary>
               <AccordionDetails className={findStyles.price}>
-                <input
-                  max={parseInt(maxPriceRef.current.min) + 1}
-                  min='0'
-                  ref={minPriceRef}
+                <TextField
+                  onChange={onMinChange}
+                  min={min}
+                  max='99'
+                  value={min}
                   id='outlined-number'
-                  label='From'
                   type='number'
                 />
                 <TextField
                   //   min={minPriceRef.current.value}
-                  ref={maxPriceRef}
+                  onChange={onMaxChange}
+                  min={min + 1}
+                  max={max}
+                  value={max}
                   id='outlined-number'
-                  label='To'
                   type='number'
                 />
               </AccordionDetails>
@@ -121,7 +157,12 @@ const FindMentor = () => {
           </div>
         </div>
       </div>
-      <MentorLists />
+      <MentorLists
+        filterLanguages={filterLanguages}
+        filterLevel={filterLevel}
+        min={min}
+        max={max}
+      />
     </section>
   );
 };
