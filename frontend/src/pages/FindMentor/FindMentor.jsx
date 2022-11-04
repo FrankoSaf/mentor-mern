@@ -46,22 +46,12 @@ const FindMentor = () => {
       )
     );
   }, [orgArr, experience]);
-  const onMinChange = (e) => {
-    e.target.value = Math.round(parseInt(e.target.value));
-    e.target.value = Number(e.target.value);
-    if (e.target.value > 0 && e.target.value < parseInt(max)) {
-      setMin(Number(e.target.value));
-    } else if (e.target.value <= 0) {
-      setMin(0);
-    }
-  };
-  const onMaxChange = (e) => {
+
+  const onPriceChange = (e, num, setNum) => {
     e.target.value = Math.round(e.target.value);
     e.target.value = Number(e.target.value);
-    if (e.target.value < 100 && e.target.value > Number(min)) {
-      setMax(Number(e.target.value));
-    } else if (e.target.value > 100) {
-      setMax(100);
+    if (e.target.value <= 100 && e.target.value >= 0) {
+      setNum(Number(e.target.value));
     }
   };
   return (
@@ -136,16 +126,16 @@ const FindMentor = () => {
               </AccordionSummary>
               <AccordionDetails className={findStyles.price}>
                 <TextField
-                  onChange={onMinChange}
+                  onChange={(e) => onPriceChange(e, min, setMin)}
                   min={min}
-                  max='99'
+                  max={max - 1}
                   value={min}
                   id='outlined-number'
                   type='number'
                 />
                 <TextField
                   //   min={minPriceRef.current.value}
-                  onChange={onMaxChange}
+                  onChange={(e) => onPriceChange(e, max, setMax)}
                   min={min + 1}
                   max={max}
                   value={max}
